@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Neuz — Discord Bot Developer</title>
+  <meta name="description" content="Neuz is a Discord bot developer from the Philippines. Discord bots, Lavalink music libraries, and lightweight Windows tools like NeuzStrap, NeuzBlox and Raya. Open for commissions.">
+  <meta name="author" content="Neuz">
+  <meta name="theme-color" content="#0a0a0a">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Neuz — Discord Bot Developer">
+  <meta property="og:description" content="Discord bots, Lavalink music libraries and Windows tools. Currently building NeuzStrap, NeuzBlox and Raya. Open for commissions.">
+  <meta property="og:url" content="https://neuzgg.github.io/">
+  <!-- Must stay a full URL: Discord and Twitter only show the preview image with an absolute URL -->
+  <meta property="og:image" content="https://neuzgg.github.io/assets/img/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+  <!-- Set theme + JS flag before paint so there is no flash -->
+  <script>
+    (function () {
+      var d = document.documentElement, t = null;
+      d.classList.add('js');
+      try { t = localStorage.getItem('neuz-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark') {
+        t = window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      }
+      d.setAttribute('data-theme', t);
+      try { if (sessionStorage.getItem('neuz-seen')) d.classList.add('skip-loader'); } catch (e) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <a class="skip" href="#work">Skip to content</a>
+
+  <!-- Icon sprite -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M8.5 7H17v8.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z" fill="currentColor"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 8.5V6.5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2 0-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></symbol>
+    <symbol id="i-discord" viewBox="0 0 24 24"><path fill="currentColor" d="M20.3 4.4a19.8 19.8 0 0 0-4.9-1.5l-.6 1.2a18.3 18.3 0 0 0-5.5 0l-.6-1.2a19.7 19.7 0 0 0-4.9 1.5C.5 9-.3 13.6.1 18.1a19.9 19.9 0 0 0 6 3l1.3-2c-.7-.3-1.3-.6-1.9-.9l.4-.3a14.2 14.2 0 0 0 12.1 0l.4.3c-.6.3-1.2.6-1.9.9l1.2 2a19.8 19.8 0 0 0 6-3c.5-5.2-.8-9.7-3.5-13.7ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 2.5v2.2M12 19.3v2.2M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <!-- Loader -->
+  <div class="loader" aria-hidden="true">
+    <div class="loader__inner">
+      <div class="loader__name"><span>N</span><span>E</span><span>U</span><span>Z</span></div>
+      <div class="loader__row">
+        <span class="loader__label">Loading portfolio</span>
+        <span class="loader__count"><span data-loader-count>0</span>%</span>
+      </div>
+      <div class="loader__bar"><i data-loader-bar></i></div>
+    </div>
+  </div>
+
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor__ring"><span class="cursor__label"></span></div>
+    <div class="cursor__dot"></div>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="progress" aria-hidden="true"><i></i></div>
+
+  <!-- Nav -->
+  <header class="nav" data-nav>
+    <div class="nav__inner">
+      <a class="nav__logo" href="#top" aria-label="Neuz, back to top">neuz<sup>®</sup></a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#work" data-hover>Work</a>
+        <a href="#archive" data-hover>Archive</a>
+        <a href="#services" data-hover>Commissions</a>
+        <a href="#about" data-hover>About</a>
+        <a href="#contact" data-hover>Contact</a>
+      </nav>
+      <div class="nav__right">
+        <a class="status" href="#contact"><span class="status__dot"></span><span class="status__text">Open for commissions</span></a>
+        <button class="icon-btn theme-toggle" type="button" aria-label="Switch color theme" data-theme-toggle>
+          <svg class="i-sun"><use href="#i-sun"/></svg>
+          <svg class="i-moon"><use href="#i-moon"/></svg>
+        </button>
+        <button class="icon-btn menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="menu" data-menu aria-hidden="true">
+    <nav class="menu__links" aria-label="Mobile">
+      <a href="#work"><small>01</small>Work</a>
+      <a href="#archive"><small>02</small>Archive</a>
+      <a href="#services"><small>03</small>Commissions</a>
+      <a href="#about"><small>04</small>About</a>
+      <a href="#contact"><small>05</small>Contact</a>
+    </nav>
+    <div class="menu__foot">
+      <span class="status"><span class="status__dot"></span>Open for commissions</span>
+      <span>Manila, PH</span>
+    </div>
+  </div>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" data-hero>
+      <canvas class="hero__canvas" data-dots aria-hidden="true"></canvas>
+
+      <div class="container hero__inner">
+        <p class="eyebrow hero__eyebrow" data-hero-fade>
+          <span class="eyebrow__line"></span>Neuz — Discord bot developer, Philippines
+        </p>
+
+        <h1 class="hero__title" aria-label="I build Discord bots that just work.">
+          <span class="line" aria-hidden="true"><span>I build</span></span>
+          <span class="line" aria-hidden="true"><span><em class="scramble" data-scramble='["Discord bots","music systems","Roblox tools","Lavalink clients","bot dashboards"]'>Discord bots</em><span class="caret"></span></span></span>
+          <span class="line" aria-hidden="true"><span>that just work.</span></span>
+        </h1>
+
+        <div class="hero__bottom" data-hero-fade>
+          <p class="hero__lead">
+            I write Discord bots, the Lavalink libraries that power them, and small Windows tools
+            for Roblox players. Clean code, fast bots, no downtime drama. Commissions are open.
+          </p>
+          <div class="hero__cta">
+            <a class="btn btn--solid" href="#contact" data-magnetic>
+              <span>Start a project</span><svg><use href="#i-arrow"/></svg>
+            </a>
+            <a class="btn btn--ghost" href="#work" data-magnetic>
+              <span>See my work</span><svg class="is-down"><use href="#i-down"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container hero__foot" data-hero-fade>
+        <span class="mono">Now shipping <b>NeuzStrap</b> · <b>NeuzBlox</b> · <b>Raya</b></span>
+        <span class="scroll-cue mono"><i></i>Scroll</span>
+        <span class="mono">Manila <time data-clock>--:--</time></span>
+      </div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track" data-marquee>
+        <div class="marquee__group">
+          <span>Discord bots</span><i>✦</i>
+          <span class="outline">Music systems</span><i>✦</i>
+          <span>Lavalink v4</span><i>✦</i>
+          <span class="outline">Roblox tools</span><i>✦</i>
+          <span>Rich Presence</span><i>✦</i>
+          <span class="outline">Dashboards</span><i>✦</i>
+        </div>
+      </div>
+      <div class="marquee__track marquee__track--small" data-marquee data-marquee-reverse>
+        <div class="marquee__group">
+          <span>TypeScript</span><i>/</i><span>JavaScript</span><i>/</i><span>Node.js</span><i>/</i><span>discord.js</span><i>/</i>
+          <span>C#</span><i>/</i><span>.NET</span><i>/</i><span>Python</span><i>/</i><span>C++</span><i>/</i>
+          <span>Lavalink</span><i>/</i><span>WebSocket</span><i>/</i><span>MongoDB</span><i>/</i><span>Redis</span><i>/</i><span>PostgreSQL</span><i>/</i>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ CURRENT PROJECTS ============ -->
+    <section class="section" id="work">
+      <div class="container">
+        <header class="section__head">
+          <span class="section__num mono">01 — Work</span>
+          <h2 class="section__title" data-split>Currently building</h2>
+          <p class="section__aside">Three projects I'm actively shipping. Numbers are pulled live from GitHub.</p>
+        </header>
+
+        <!-- NeuzStrap -->
+        <article class="project" data-repo="NeuzGG/NeuzStrap">
+          <div class="project__info" data-reveal>
+            <div class="project__meta">
+              <span class="project__index mono">01</span>
+              <span class="chip mono">C# · .NET 4.8</span>
+              <span class="chip mono" data-stat="release">v1.1.0</span>
+              <span class="chip mono" data-stat="stars" hidden><svg><use href="#i-star"/></svg><b>0</b></span>
+            </div>
+            <div class="project__title">
+              <img class="project__icon" src="assets/img/neuzstrap-icon.png" alt="" width="48" height="48" loading="lazy">
+              <h3 class="project__name">NeuzStrap</h3>
+            </div>
+            <p class="project__tagline">The potato-friendly Roblox launcher.</p>
+            <p class="project__desc">
+              A ~0.5&nbsp;MB Roblox bootstrapper built around one question: how do you make Roblox
+              playable on a weak PC? It scans your hardware, picks a profile, and only uses the
+              FastFlags Roblox actually accepts. No fake "FPS boost" flags.
+            </p>
+            <ul class="project__features">
+              <li>One-click Balanced, Potato and Ultra Potato profiles</li>
+              <li>Game Booster: CPU priority, free RAM, force the strong GPU</li>
+              <li>Server location notice, one-click rejoin, Discord Rich Presence</li>
+              <li>Cleaner, mods, custom cursors and a FastFlag editor</li>
+            </ul>
+            <div class="project__links">
+              <a class="link" href="https://github.com/NeuzGG/NeuzStrap" target="_blank" rel="noopener" data-hover><svg class="i"><use href="#i-github"/></svg><span>Source</span><svg><use href="#i-arrow"/></svg></a>
+              <a class="link" href="https://github.com/NeuzGG/NeuzStrap/releases/latest" target="_blank" rel="noopener" data-hover><span>Download</span><svg><use href="#i-arrow"/></svg></a>
+            </div>
+          </div>
+
+          <a class="project__visual" href="https://github.com/NeuzGG/NeuzStrap" target="_blank" rel="noopener" data-tilt data-cursor="Open" data-reveal aria-label="Open NeuzStrap on GitHub">
+            <div class="window">
+              <div class="window__bar">
+                <span class="window__dots"><i></i><i></i><i></i></span>
+                <span class="window__title mono">NeuzStrap.exe</span>
+                <span class="window__meta mono">~0.5 MB</span>
+              </div>
+              <div class="window__body window__body--shot">
+                <img src="assets/img/neuzstrap-home.png" alt="NeuzStrap home screen showing the Potato profile, detected PC specs and recent games" width="1040" height="690" loading="lazy">
+              </div>
+            </div>
+            <span class="float-tag float-tag--a mono">No admin needed</span>
+            <span class="float-tag float-tag--b mono">Low-end PC ready</span>
+          </a>
+        </article>
+
+        <!-- NeuzBlox -->
+        <article class="project project--flip" data-repo="NeuzGG/NeuzBlox">
+          <div class="project__info" data-reveal>
+            <div class="project__meta">
+              <span class="project__index mono">02</span>
+              <span class="chip mono">C# · Windows</span>
+              <span class="chip mono" data-stat="release">v1.1.0</span>
+              <span class="chip mono" data-stat="stars" hidden><svg><use href="#i-star"/></svg><b>0</b></span>
+            </div>
+            <div class="project__title">
+              <img class="project__icon" src="assets/img/neuzblox-icon.png" alt="" width="48" height="48" loading="lazy">
+              <h3 class="project__name">NeuzBlox</h3>
+            </div>
+            <p class="project__tagline">Run every Roblox account at once.</p>
+            <p class="project__desc">
+              A 252&nbsp;KB multi-instance launcher. It holds the lock Roblox checks, gets a fresh
+              launch ticket for each account, and tiles every client side by side. It never touches
+              the Roblox process: no injection, no memory edits.
+            </p>
+            <ul class="project__features">
+              <li>Unlimited accounts with sessions that refresh themselves</li>
+              <li>Join a place, a private server, a job ID or a friend</li>
+              <li>Live status per client: PID, uptime, the game it's in</li>
+              <li>Grid, column, row and cascade tiling, plus Rich Presence</li>
+            </ul>
+            <div class="project__links">
+              <a class="link" href="https://github.com/NeuzGG/NeuzBlox" target="_blank" rel="noopener" data-hover><svg class="i"><use href="#i-github"/></svg><span>Source</span><svg><use href="#i-arrow"/></svg></a>
+              <a class="link" href="https://neuzgg.github.io/NeuzBlox/" target="_blank" rel="noopener" data-hover><span>Website</span><svg><use href="#i-arrow"/></svg></a>
+            </div>
+          </div>
+
+          <a class="project__visual" href="https://neuzgg.github.io/NeuzBlox/" target="_blank" rel="noopener" data-tilt data-cursor="Open" data-reveal aria-label="Open the NeuzBlox website">
+            <div class="window">
+              <div class="window__bar">
+                <span class="window__dots"><i></i><i></i><i></i></span>
+                <span class="window__title mono">NeuzBlox</span>
+                <span class="window__meta mono">252 KB</span>
+              </div>
+              <div class="window__body blox" data-blox>
+                <aside class="blox__rail">
+                  <span class="blox__lock mono"><i></i>Multi-instance<b>Unlocked</b></span>
+                  <ul class="blox__nav mono">
+                    <li class="is-active">Instances</li>
+                    <li>Accounts</li>
+                    <li>Destinations</li>
+                    <li>Settings</li>
+                  </ul>
+                </aside>
+                <div class="blox__main">
+                  <div class="blox__head mono"><span>Instances · <b data-blox-count>4</b> live</span><span class="blox__layout">Tile: <b data-blox-layout>Grid</b></span></div>
+                  <div class="blox__grid" data-blox-grid>
+                    <div class="client"><div class="client__bar mono">main</div><div class="client__body"><span class="client__state mono" data-state>running</span><span class="client__up mono" data-up>00:00</span></div></div>
+                    <div class="client"><div class="client__bar mono">alt_01</div><div class="client__body"><span class="client__state mono" data-state>running</span><span class="client__up mono" data-up>00:00</span></div></div>
+                    <div class="client"><div class="client__bar mono">alt_02</div><div class="client__body"><span class="client__state mono" data-state>running</span><span class="client__up mono" data-up>00:00</span></div></div>
+                    <div class="client"><div class="client__bar mono">alt_03</div><div class="client__body"><span class="client__state mono" data-state>running</span><span class="client__up mono" data-up>00:00</span></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="float-tag float-tag--a mono">Not an exploit</span>
+            <span class="float-tag float-tag--b mono">Zero dependencies</span>
+          </a>
+        </article>
+
+        <!-- Raya -->
+        <article class="project" data-repo="NeuzGG/raya">
+          <div class="project__info" data-reveal>
+            <div class="project__meta">
+              <span class="project__index mono">03</span>
+              <span class="chip mono">TypeScript · Node.js</span>
+              <span class="chip mono" data-stat="npm">raya.js 1.0.0</span>
+              <span class="chip mono" data-stat="stars"><svg><use href="#i-star"/></svg><b>1</b></span>
+            </div>
+            <div class="project__title">
+              <img class="project__icon" src="assets/img/raya-icon.svg" alt="" width="48" height="48" loading="lazy">
+              <h3 class="project__name">Raya</h3>
+            </div>
+            <p class="project__tagline">The Lavalink v4 client that keeps the music playing.</p>
+            <p class="project__desc">
+              A fast, resilient library for Discord music bots. Players survive bot restarts, dead
+              nodes and network blips. There's also an official Raya bot built on it that you can
+              add to your server today.
+            </p>
+            <ul class="project__features">
+              <li>Restart-proof players with v4 session resuming</li>
+              <li>Multi-node failover and load-aware balancing</li>
+              <li>Smart autoplay, filters, lyrics and SponsorBlock</li>
+              <li>Works with discord.js, Eris, Oceanic, or anything with <code>send</code></li>
+            </ul>
+            <div class="project__links">
+              <a class="link" href="https://github.com/NeuzGG/raya" target="_blank" rel="noopener" data-hover><svg class="i"><use href="#i-github"/></svg><span>Source</span><svg><use href="#i-arrow"/></svg></a>
+              <a class="link" href="https://neuzgg.github.io/raya/" target="_blank" rel="noopener" data-hover><span>Docs</span><svg><use href="#i-arrow"/></svg></a>
+              <a class="link" href="https://www.npmjs.com/package/raya.js" target="_blank" rel="noopener" data-hover><span>npm</span><svg><use href="#i-arrow"/></svg></a>
+              <a class="link" href="https://discord.com/oauth2/authorize?client_id=1549552307799199846&amp;scope=bot+applications.commands&amp;permissions=281474979933200" target="_blank" rel="noopener" data-hover><span>Add the bot</span><svg><use href="#i-arrow"/></svg></a>
+            </div>
+          </div>
+
+          <a class="project__visual" href="https://neuzgg.github.io/raya/" target="_blank" rel="noopener" data-tilt data-cursor="Docs" data-reveal aria-label="Open the Raya documentation">
+            <div class="window">
+              <div class="window__bar">
+                <span class="window__dots"><i></i><i></i><i></i></span>
+                <span class="window__title mono">raya — node bot.js</span>
+                <span class="window__meta mono">lavalink v4</span>
+              </div>
+              <div class="window__body raya" data-raya>
+                <div class="np">
+                  <div class="np__art" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+                  <div class="np__info">
+                    <span class="np__label mono">Now playing · #music</span>
+                    <strong class="np__title">Midnight City Drive</strong>
+                    <span class="np__by mono">requested by @neuz</span>
+                    <div class="np__bar"><i data-np-bar></i></div>
+                    <div class="np__time mono"><span data-np-time>0:00</span><span>3:52</span></div>
+                  </div>
+                </div>
+                <ol class="term mono" data-term></ol>
+              </div>
+            </div>
+            <span class="float-tag float-tag--a mono">1 runtime dependency</span>
+            <span class="float-tag float-tag--b mono">Typed end to end</span>
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ STATS ============ -->
+    <section class="stats" aria-label="Numbers">
+      <div class="container stats__grid">
+        <div class="stat" data-reveal>
+          <span class="stat__num"><span data-count="38" data-live="repos">38</span></span>
+          <span class="stat__label mono">Public repos across 3 accounts</span>
+        </div>
+        <div class="stat" data-reveal>
+          <span class="stat__num"><span data-count="5">5</span></span>
+          <span class="stat__label mono">Packages published on npm</span>
+        </div>
+        <div class="stat" data-reveal>
+          <span class="stat__num"><span data-count="3">3</span></span>
+          <span class="stat__label mono">Lavalink client libraries I've written</span>
+        </div>
+        <div class="stat" data-reveal>
+          <span class="stat__num"><span data-count="34" data-live="stars">34</span></span>
+          <span class="stat__label mono">GitHub stars and counting</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ARCHIVE ============ -->
+    <section class="section" id="archive">
+      <div class="container">
+        <header class="section__head">
+          <span class="section__num mono">02 — Archive</span>
+          <h2 class="section__title" data-split>More things I've built</h2>
+          <p class="section__aside">Bots, libraries and tools from all three of my GitHub accounts.</p>
+        </header>
+
+        <div class="filters" role="tablist" aria-label="Filter projects" data-filters>
+          <button class="filter is-active" type="button" role="tab" aria-selected="true" data-filter="all">All <sup data-filter-count="all"></sup></button>
+          <button class="filter" type="button" role="tab" aria-selected="false" data-filter="bot">Bots <sup data-filter-count="bot"></sup></button>
+          <button class="filter" type="button" role="tab" aria-selected="false" data-filter="lib">Libraries <sup data-filter-count="lib"></sup></button>
+          <button class="filter" type="button" role="tab" aria-selected="false" data-filter="tool">Tools <sup data-filter-count="tool"></sup></button>
+          <button class="filter" type="button" role="tab" aria-selected="false" data-filter="web">Web <sup data-filter-count="web"></sup></button>
+        </div>
+
+        <div class="archive__head mono" aria-hidden="true">
+          <span>Project</span><span>About</span><span>Stack</span><span>Account</span><span>Year</span>
+        </div>
+        <ul class="archive" data-archive>
+          <!-- Rendered from the ARCHIVE list in assets/js/main.js -->
+        </ul>
+        <noscript>
+          <p class="archive__noscript">See everything on
+            <a href="https://github.com/NeuzGG">github.com/NeuzGG</a>,
+            <a href="https://github.com/ryxu-xo">github.com/ryxu-xo</a> and
+            <a href="https://github.com/Enyzelle">github.com/Enyzelle</a>.</p>
+        </noscript>
+        <div class="archive__more">
+          <button class="btn btn--ghost" type="button" data-archive-more data-magnetic>
+            <span>Show all projects</span><svg class="is-down"><use href="#i-down"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SERVICES ============ -->
+    <section class="section services" id="services">
+      <div class="container">
+        <header class="section__head">
+          <span class="section__num mono">03 — Commissions</span>
+          <h2 class="section__title" data-split>What I can build for you</h2>
+          <p class="section__aside"><span class="status status--inline"><span class="status__dot"></span>Open for commissions</span> Most work is arranged over Discord.</p>
+        </header>
+
+        <div class="services__grid">
+          <article class="service" data-reveal data-spotlight>
+            <span class="service__num mono">/01</span>
+            <h3 class="service__title">Custom Discord bots</h3>
+            <p class="service__desc">Moderation, tickets, economies, card collecting games, utility bots. Slash commands, buttons, modals, and a database behind it.</p>
+            <ul class="service__tags mono"><li>discord.js</li><li>Slash commands</li><li>MongoDB</li></ul>
+          </article>
+          <article class="service" data-reveal data-spotlight>
+            <span class="service__num mono">/02</span>
+            <h3 class="service__title">Music bots</h3>
+            <p class="service__desc">Lavalink v4 music bots with queues, filters, autoplay, lyrics and players that survive restarts. Built on the client libraries I wrote myself.</p>
+            <ul class="service__tags mono"><li>Lavalink v4</li><li>Raya</li><li>Spotify</li></ul>
+          </article>
+          <article class="service" data-reveal data-spotlight>
+            <span class="service__num mono">/03</span>
+            <h3 class="service__title">Bot websites &amp; dashboards</h3>
+            <p class="service__desc">Landing pages for your bot, docs sites, and live widgets like a "now playing" feed or server stats on your own site.</p>
+            <ul class="service__tags mono"><li>HTML/CSS/JS</li><li>REST</li><li>WebSocket</li></ul>
+          </article>
+          <article class="service" data-reveal data-spotlight>
+            <span class="service__num mono">/04</span>
+            <h3 class="service__title">Desktop &amp; Roblox tools</h3>
+            <p class="service__desc">Small, fast Windows apps in C# and .NET. Launchers, account tools, Rich Presence integrations, and anything else that should be one lightweight .exe.</p>
+            <ul class="service__tags mono"><li>C# / .NET</li><li>Discord RPC</li><li>Windows</li></ul>
+          </article>
+        </div>
+
+        <ol class="process" data-process>
+          <li class="process__step" data-reveal>
+            <span class="process__n mono">Step 1</span>
+            <h4>Message me</h4>
+            <p>DM me on Discord with what you need. Rough ideas are fine.</p>
+          </li>
+          <li class="process__step" data-reveal>
+            <span class="process__n mono">Step 2</span>
+            <h4>Scope &amp; quote</h4>
+            <p>We agree on features, a timeline and a price before any work starts.</p>
+          </li>
+          <li class="process__step" data-reveal>
+            <span class="process__n mono">Step 3</span>
+            <h4>Build</h4>
+            <p>You get progress updates and a test build so you can try it early.</p>
+          </li>
+          <li class="process__step" data-reveal>
+            <span class="process__n mono">Step 4</span>
+            <h4>Ship &amp; support</h4>
+            <p>I help you host it, hand over the code, and fix anything that comes up.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="section about" id="about">
+      <div class="container">
+        <header class="section__head">
+          <span class="section__num mono">04 — About</span>
+        </header>
+
+        <p class="about__statement" data-words>
+          I'm Neuz, a developer from the Philippines. I build Discord bots, the Lavalink libraries
+          that make them play music, and lightweight Windows tools for Roblox players. I like
+          software that stays online, stays fast, and still runs fine on a potato PC.
+        </p>
+
+        <div class="about__grid">
+          <div class="toolkit" data-reveal>
+            <h3 class="toolkit__title mono">Toolkit</h3>
+            <dl>
+              <div><dt class="mono">Languages</dt><dd>TypeScript, JavaScript, C#, Python, C++</dd></div>
+              <div><dt class="mono">Discord</dt><dd>discord.js, Lavalink v4, Rich Presence, BetterDiscord</dd></div>
+              <div><dt class="mono">Backend</dt><dd>Node.js, REST, WebSocket, MongoDB, PostgreSQL, Redis</dd></div>
+              <div><dt class="mono">Desktop</dt><dd>.NET Framework, Windows APIs, Geode (C++)</dd></div>
+            </dl>
+          </div>
+
+          <div class="accounts">
+            <h3 class="toolkit__title mono">Where my code lives</h3>
+            <a class="account" href="https://github.com/NeuzGG" target="_blank" rel="noopener" data-reveal data-spotlight data-cursor="Visit">
+              <img src="assets/img/avatar-NeuzGG.jpg" alt="" width="56" height="56" loading="lazy">
+              <span class="account__body">
+                <span class="account__handle">@NeuzGG <em class="mono">main</em></span>
+                <span class="account__desc">NeuzStrap, NeuzBlox, Raya, robloxian-api</span>
+              </span>
+              <span class="account__count mono"><b data-account-repos="NeuzGG">9</b> repos</span>
+              <svg class="account__arrow"><use href="#i-arrow"/></svg>
+            </a>
+            <a class="account" href="https://github.com/ryxu-xo" target="_blank" rel="noopener" data-reveal data-spotlight data-cursor="Visit">
+              <img src="assets/img/avatar-ryxu-xo.jpg" alt="" width="56" height="56" loading="lazy">
+              <span class="account__body">
+                <span class="account__handle">@ryxu-xo</span>
+                <span class="account__desc">Lavalink clients and music bots: Euralink, Lavaflow, Moosek</span>
+              </span>
+              <span class="account__count mono"><b data-account-repos="ryxu-xo">17</b> repos</span>
+              <svg class="account__arrow"><use href="#i-arrow"/></svg>
+            </a>
+            <a class="account" href="https://github.com/Enyzelle" target="_blank" rel="noopener" data-reveal data-spotlight data-cursor="Visit">
+              <img src="assets/img/avatar-Enyzelle.jpg" alt="" width="56" height="56" loading="lazy">
+              <span class="account__body">
+                <span class="account__handle">@Enyzelle</span>
+                <span class="account__desc">Bots and Discord mods: Gehlee, EnyzMid, Stellar Music</span>
+              </span>
+              <span class="account__count mono"><b data-account-repos="Enyzelle">12</b> repos</span>
+              <svg class="account__arrow"><use href="#i-arrow"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="contact" id="contact">
+      <div class="container">
+        <span class="section__num mono">05 — Contact</span>
+        <h2 class="contact__title" data-split>Got a bot idea?<br><em>Let's build it.</em></h2>
+
+        <div class="contact__row">
+          <a class="contact__cta" href="https://discord.com/users/1335582992843804672" target="_blank" rel="noopener" data-discord-link data-magnetic data-magnetic-strength="0.35">
+            <svg><use href="#i-discord"/></svg>
+            <span>Message me<br>on Discord</span>
+          </a>
+
+          <div class="contact__side">
+            <p class="contact__text">
+              The fastest way to reach me is a Discord DM. Tell me what you want to build,
+              and I'll reply with questions or a quote.
+            </p>
+            <button class="copy" type="button" data-copy data-hover hidden>
+              <span class="copy__label mono">Discord</span>
+              <span class="copy__value" data-discord-name></span>
+              <svg><use href="#i-copy"/></svg>
+            </button>
+            <ul class="socials">
+              <li><a href="https://github.com/NeuzGG" target="_blank" rel="noopener" data-hover><svg class="i"><use href="#i-github"/></svg>NeuzGG</a></li>
+              <li><a href="https://github.com/ryxu-xo" target="_blank" rel="noopener" data-hover><svg class="i"><use href="#i-github"/></svg>ryxu-xo</a></li>
+              <li><a href="https://github.com/Enyzelle" target="_blank" rel="noopener" data-hover><svg class="i"><use href="#i-github"/></svg>Enyzelle</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__row mono">
+      <span>© <span data-year>2026</span> Neuz. Built by hand, no templates.</span>
+      <span>Local time <time data-clock-full>--:--:--</time> PHT</span>
+      <a href="#top" data-hover>Back to top ↑</a>
+    </div>
+    <div class="footer__mark" aria-hidden="true"><span>NEUZ</span></div>
+  </footer>
+
+  <div class="toast mono" role="status" aria-live="polite" data-toast></div>
+
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>
